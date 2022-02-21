@@ -48,7 +48,6 @@ class ViewController: UIViewController {
               password == "123456" else {
                   
                   show(mesasge: "Неверные данные")
-                  
                   return}
         
         performSegue(withIdentifier: "LoginSuccess", sender: nil)
