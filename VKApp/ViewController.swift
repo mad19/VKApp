@@ -8,12 +8,14 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet var loginField: UITextField!
+    @IBOutlet var passwordField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
         
-        print(#function)
     }
     
     override func viewDidLayoutSubviews() {
@@ -23,26 +25,34 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        print(#function)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        print(#function)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        print(#function)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        print(#function)
     }
     
     
+    @IBAction func tapButton(_ sender: Any) {
+        guard let login = loginField.text,
+              let password = passwordField.text,
+              login == "admin",
+              password == "123456" else {
+                  
+                  show(mesasge: "Неверные данные")
+                  
+                  return}
+        
+        performSegue(withIdentifier: "LoginSuccess", sender: nil)
+    }
     
 
 
