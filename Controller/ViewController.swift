@@ -22,9 +22,22 @@ class ViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @objc func hideScreen() {
+        view.endEditing(true)
+    }
+    
+    @objc func willShowKeyboard(_ notification: Notification) {
+        guard let info = notification.userInfo as NSDictionary?,
+              let keyboardSize = info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue else {return}
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(willShowKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(willShowKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,11 +57,10 @@ class ViewController: UIViewController {
     @IBAction func tapButton(_ sender: Any) {
         guard let login = loginField.text,
               let password = passwordField.text,
-              login == "admin",
-              password == "123456" else {
+              login == "",
+              password == "" else {
                   
                   show(mesasge: "Неверные данные")
-                  
                   return}
         
         performSegue(withIdentifier: "LoginSuccess", sender: nil)
